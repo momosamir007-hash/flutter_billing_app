@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart'; // لتنسيق التاريخ والوقت
+import 'package:hive_flutter/hive_flutter.dart';
+import 'package:intl/intl.dart';
 import '../../../../core/theme/app_theme.dart';
 import '../../../../core/data/hive_database.dart';
 import '../../data/models/sale_model.dart';
@@ -16,10 +17,10 @@ class SalesHistoryPage extends StatelessWidget {
         title: const Text('سجل المبيعات والفواتير'),
         centerTitle: true,
       ),
-      body: ValueListenableBuilder(
+      body: ValueListenableBuilder<Box<SaleModel>>(
         valueListenable: saleBox.listenable(),
         builder: (context, box, _) {
-          final sales = box.values.toList().reversed.toList(); // أحدث المبيعات أولاً
+          final sales = box.values.toList().reversed.toList();
 
           if (sales.isEmpty) {
             return Center(
@@ -40,7 +41,7 @@ class SalesHistoryPage extends StatelessWidget {
             padding: const EdgeInsets.all(16),
             itemCount: sales.length,
             itemBuilder: (context, index) {
-              final sale = sales[index] as SaleModel;
+              final sale = sales[index];
               final formattedDate = DateFormat('yyyy/MM/dd - hh:mm a').format(sale.date);
 
               return Card(
@@ -67,8 +68,7 @@ class SalesHistoryPage extends StatelessWidget {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text('تفاصيل المتجر: ${sale.shopName}', style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 12)),
-                          if (sale.address.isNotEmpty) Text('العنوان: ${sale.address}', style: TextStyle(color: Colors.grey.shade600, fontSize: 11)),
+                          Text('المتجر: ${sale.shopName}', style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 12)),
                           const SizedBox(height: 8),
                           const Text('المنتجات المباعة:', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13, color: Colors.blueGrey)),
                           const SizedBox(height: 4),
