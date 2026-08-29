@@ -10,7 +10,8 @@ dependencies:
   flutter:
     sdk: flutter
   cupertino_icons: ^1.0.8
-  
+  image_picker: ^1.0.7
+
   # State Management & DI
   flutter_bloc: ^8.1.5
   get_it: ^7.6.7
