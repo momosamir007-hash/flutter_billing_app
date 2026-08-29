@@ -2,7 +2,7 @@ import 'package:hive/hive.dart';
 
 part 'sale_model.g.dart';
 
-@HiveType(typeId: 1)
+@HiveType(typeId: 3)
 class SaleModel extends HiveObject {
   @HiveField(0)
   final String id;
@@ -37,7 +37,7 @@ class SaleModel extends HiveObject {
   });
 }
 
-@HiveType(typeId: 2)
+@HiveType(typeId: 4)
 class SaleItemModel extends HiveObject {
   @HiveField(0)
   final String productId;
