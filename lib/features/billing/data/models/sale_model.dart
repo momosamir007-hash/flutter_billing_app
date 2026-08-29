@@ -1,6 +1,6 @@
 import 'package:hive/hive.dart';
 
-part 'sale_model.g.dart'; // لتوليد الأكواد تلقائياً
+part 'sale_model.g.dart';
 
 @HiveType(typeId: 1)
 class SaleModel extends HiveObject {
@@ -16,11 +16,24 @@ class SaleModel extends HiveObject {
   @HiveField(3)
   final double totalAmount;
 
+  // تفاصيل المتجر المرتبطة بالفاتورة
+  @HiveField(4)
+  final String shopName;
+
+  @HiveField(5)
+  final String address;
+
+  @HiveField(6)
+  final String phone;
+
   SaleModel({
     required this.id,
     required this.date,
     required this.items,
     required this.totalAmount,
+    required this.shopName,
+    required this.address,
+    required this.phone,
   });
 }
 
