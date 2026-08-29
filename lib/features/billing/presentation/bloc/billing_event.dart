@@ -1,57 +1,69 @@
 part of 'billing_bloc.dart';
 
+/// الحدث الأساسي الخاص بـ BillingBloc
 abstract class BillingEvent extends Equatable {
   const BillingEvent();
+
   @override
-  List<Object> get props => [];
+  List<Object?> get props => [];
 }
 
+/// مسح باركود المنتج
 class ScanBarcodeEvent extends BillingEvent {
   final String barcode;
+
   const ScanBarcodeEvent(this.barcode);
+
   @override
-  List<Object> get props => [barcode];
+  List<Object?> get props => [barcode];
 }
 
+/// إضافة منتج إلى السلة
 class AddProductToCartEvent extends BillingEvent {
   final Product product;
+
   const AddProductToCartEvent(this.product);
+
   @override
-  List<Object> get props => [product];
+  List<Object?> get props => [product];
 }
 
+/// حذف منتج من السلة
 class RemoveProductFromCartEvent extends BillingEvent {
-  final String productId;
+  final dynamic productId;
+
   const RemoveProductFromCartEvent(this.productId);
+
   @override
-  List<Object> get props => [productId];
+  List<Object?> get props => [productId];
 }
 
+/// تغيير كمية منتج داخل السلة
 class UpdateQuantityEvent extends BillingEvent {
-  final String productId;
+  final dynamic productId;
   final int quantity;
-  const UpdateQuantityEvent(this.productId, this.quantity);
+
+  const UpdateQuantityEvent(
+    this.productId,
+    this.quantity,
+  );
+
   @override
-  List<Object> get props => [productId, quantity];
+  List<Object?> get props => [
+        productId,
+        quantity,
+      ];
 }
 
-class ClearCartEvent extends BillingEvent {}
+/// تفريغ السلة بالكامل
+class ClearCartEvent extends BillingEvent {
+  const ClearCartEvent();
+}
 
-class PrintReceiptEvent extends BillingEvent {
-  final String shopName;
-  final String address1;
-  final String address2;
-  final String phone;
-  final String footer;
-
-  const PrintReceiptEvent({
-    required this.shopName,
-    required this.address1,
-    required this.address2,
-    required this.phone,
-    required this.footer,
-  });
-
-  @override
-  List<Object> get props => [shopName, address1, address2, phone, footer];
+/// إنهاء وحفظ الفاتورة الرقمية
+///
+/// هذا الحدث يستبدل PrintReceiptEvent.
+/// لا توجد أي عملية طباعة أو اتصال بطابعة.
+class CompleteSaleEvent extends BillingEvent {
+  const CompleteSaleEvent();
 }
