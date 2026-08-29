@@ -5,7 +5,8 @@ import '../../domain/entities/cart_item.dart';
 import 'package:billing_app/features/product/domain/entities/product.dart';
 import 'package:billing_app/features/product/domain/usecases/product_usecases.dart';
 import '../../../../core/data/hive_database.dart';
-import '../models/sale_model.dart';
+import '../../data/models/sale_model.dart';
+
 
 part 'billing_event.dart';
 part 'billing_state.dart';
