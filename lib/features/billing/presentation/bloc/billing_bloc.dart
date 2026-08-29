@@ -228,7 +228,7 @@ class BillingBloc extends Bloc<BillingEvent, BillingState> {
   // COMPLETE SALE
   // ============================================================
 
-  Future<void> _onCompleteSale(
+    Future<void> _onCompleteSale(
     CompleteSaleEvent event,
     Emitter<BillingState> emit,
   ) async {
@@ -243,17 +243,13 @@ class BillingBloc extends Bloc<BillingEvent, BillingState> {
     }
 
     try {
-      // 1. جلب تفاصيل المتجر من قاعدة البيانات Hive لتضمينها في الفاتورة
+      // 1. جلب اسم المتجر من قاعدة البيانات Hive لتضمينه في الفاتورة
       final shopBox = HiveDatabase.shopBox;
       String shopName = 'متجري';
-      String address = '';
-      String phone = '';
 
       if (shopBox.isNotEmpty) {
         final shop = shopBox.values.first;
         shopName = shop.name;
-        address = shop.address;
-        phone = shop.phone;
       }
 
       // 2. تجهيز عناصر الفاتورة من السلة الحالية
@@ -274,8 +270,8 @@ class BillingBloc extends Bloc<BillingEvent, BillingState> {
         items: saleItems,
         totalAmount: state.totalAmount,
         shopName: shopName,
-        address: address,
-        phone: phone,
+        address: '',
+        phone: '',
       );
 
       // 4. حفظ الفاتورة في صندوق المبيعات (Hive Box)
@@ -299,4 +295,3 @@ class BillingBloc extends Bloc<BillingEvent, BillingState> {
       );
     }
   }
-}
