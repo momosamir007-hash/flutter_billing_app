@@ -16,7 +16,6 @@ class SaleModel extends HiveObject {
   @HiveField(3)
   final double totalAmount;
 
-  // تفاصيل المتجر المرتبطة بالفاتورة
   @HiveField(4)
   final String shopName;
 
