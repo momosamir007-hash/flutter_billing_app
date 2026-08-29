@@ -13,43 +13,72 @@ class HiveDatabase {
   static Future<void> init() async {
     await Hive.initFlutter();
 
-    // Register Hive adapters only once.
+    // Product
     if (!Hive.isAdapterRegistered(0)) {
-      Hive.registerAdapter(ProductModelAdapter());
+      Hive.registerAdapter(
+        ProductModelAdapter(),
+      );
     }
 
+    // Shop
     if (!Hive.isAdapterRegistered(1)) {
-      Hive.registerAdapter(ShopModelAdapter());
+      Hive.registerAdapter(
+        ShopModelAdapter(),
+      );
     }
 
+    // Sale
     if (!Hive.isAdapterRegistered(3)) {
-      Hive.registerAdapter(SaleModelAdapter());
+      Hive.registerAdapter(
+        SaleModelAdapter(),
+      );
     }
 
+    // Sale Item
     if (!Hive.isAdapterRegistered(4)) {
-      Hive.registerAdapter(SaleItemModelAdapter());
+      Hive.registerAdapter(
+        SaleItemModelAdapter(),
+      );
     }
 
-    // Open boxes.
-    await Hive.openBox<ProductModel>(productBoxName);
-    await Hive.openBox<ShopModel>(shopBoxName);
-    await Hive.openBox(settingsBoxName);
-    await Hive.openBox<SaleModel>(saleBoxName);
+    await Hive.openBox<ProductModel>(
+      productBoxName,
+    );
+
+    await Hive.openBox<ShopModel>(
+      shopBoxName,
+    );
+
+    await Hive.openBox(
+      settingsBoxName,
+    );
+
+    await Hive.openBox<SaleModel>(
+      saleBoxName,
+    );
   }
 
   static Box<ProductModel> get productBox {
-    return Hive.box<ProductModel>(productBoxName);
+    return Hive.box<ProductModel>(
+      productBoxName,
+    );
   }
 
   static Box<ShopModel> get shopBox {
-    return Hive.box<ShopModel>(shopBoxName);
+    return Hive.box<ShopModel>(
+      shopBoxName,
+    );
   }
 
   static Box get settingsBox {
-    return Hive.box(settingsBoxName);
+    return Hive.box(
+      settingsBoxName,
+    );
   }
 
   static Box<SaleModel> get saleBox {
-    return Hive.box<SaleModel>(saleBoxName);
+    return Hive.box<SaleModel>(
+      saleBoxName,
+    );
   }
 }
