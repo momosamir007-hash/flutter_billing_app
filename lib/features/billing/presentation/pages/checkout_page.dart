@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
-
+import '../../domain/entities/cart_item.dart';
 import '../../../../core/theme/app_theme.dart';
 import '../../../../core/widgets/primary_button.dart';
 import '../bloc/billing_bloc.dart';
