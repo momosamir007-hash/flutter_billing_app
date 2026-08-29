@@ -14,10 +14,82 @@ import 'features/settings/presentation/bloc/printer_event.dart';
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  await HiveDatabase.init();
-  await di.init();
+  try {
+    await HiveDatabase.init();
+    await di.init();
 
-  runApp(const MyApp());
+    runApp(const MyApp());
+  } catch (error, stackTrace) {
+    runApp(
+      StartupErrorApp(
+        error: error,
+        stackTrace: stackTrace,
+      ),
+    );
+  }
+}
+
+class StartupErrorApp extends StatelessWidget {
+  final Object error;
+  final StackTrace stackTrace;
+
+  const StartupErrorApp({
+    super.key,
+    required this.error,
+    required this.stackTrace,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      home: Scaffold(
+        appBar: AppBar(
+          title: const Text('خطأ في تشغيل التطبيق'),
+        ),
+        body: Directionality(
+          textDirection: TextDirection.rtl,
+          child: SingleChildScrollView(
+            padding: const EdgeInsets.all(20),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const Text(
+                  'حدث خطأ أثناء تشغيل التطبيق:',
+                  style: TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                const SizedBox(height: 16),
+                SelectableText(
+                  error.toString(),
+                  style: const TextStyle(
+                    fontSize: 16,
+                  ),
+                ),
+                const SizedBox(height: 20),
+                const Text(
+                  'تفاصيل الخطأ:',
+                  style: TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                const SizedBox(height: 10),
+                SelectableText(
+                  stackTrace.toString(),
+                  style: const TextStyle(
+                    fontSize: 13,
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
 }
 
 class MyApp extends StatelessWidget {
@@ -40,8 +112,6 @@ class MyApp extends StatelessWidget {
             getProductByBarcodeUseCase: di.sl(),
           ),
         ),
-        // يبقى PrinterBloc موجوداً لأن إعدادات الطابعة
-        // قد تكون مستخدمة في صفحة الإعدادات.
         BlocProvider<PrinterBloc>(
           create: (context) =>
               di.sl<PrinterBloc>()..add(InitPrinterEvent()),
@@ -52,8 +122,6 @@ class MyApp extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         theme: AppTheme.lightTheme,
         routerConfig: router,
-
-        // RTL عربي للتطبيق بالكامل.
         builder: (context, child) {
           return Directionality(
             textDirection: TextDirection.rtl,
