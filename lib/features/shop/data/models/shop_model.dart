@@ -8,18 +8,23 @@ class ShopModel extends Shop {
   @override
   @HiveField(0)
   final String name;
+
   @override
   @HiveField(1)
   final String addressLine1;
+
   @override
   @HiveField(2)
   final String addressLine2;
+
   @override
   @HiveField(3)
   final String phoneNumber;
+
   @override
   @HiveField(4)
   final String upiId;
+
   @override
   @HiveField(5)
   final String footerText;
